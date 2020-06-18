@@ -1,4 +1,4 @@
-# modal-shape-interpolation-cnn
+# Vibrational modal shape interpolation through convolutional auto encoder
 Repository of "Vibrational modal shape interpolation through convolutional auto encoder"
 
 We propose a first data-driven approach to the super-resolution of vibrational modal shapes.  
