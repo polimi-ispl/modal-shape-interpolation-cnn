@@ -21,3 +21,5 @@ A diagram of the proposed architetcure is depicted below.
 The grey and green blocks represent the input and output images, respectively.
 Each yellow block represents a layer made by two-dimensional convolution, ReLU activation function and batch normalization.
 The output of Max Pooling and Upsampling layers are depicted in red and blue, respectively, while the purple blocks represent MaxRe layers.
+
+![alt text](https://github.com/polimi-ispl/modal-shape-interpolation-cnn/blob/master/images/2020-05-05_220557.png)
