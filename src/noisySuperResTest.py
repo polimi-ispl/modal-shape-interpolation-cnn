@@ -4,8 +4,7 @@ with noisy dataset
 
 MaxReNet (uNet5Stackb) implemented in modelsUnetNoEdges
 Architectures were tested on datasets with different SNR than the one they were trained on,
-in particular: train on 40 dB and test on 30 dB ('./ModelCheckpoint/weights_best_uNetStack_noiseandphase_40vs30')
-train on 30 dB and test on 40 dB ('./ModelCheckpoint/weights_best_uNetStack_noiseandphase_30vs40')
+in particular: train on 40 dB and test on 30 dB, train on 30 dB and test on 40 dB
 """
 
 import pickle
@@ -21,6 +20,7 @@ from matplotlib import pyplot as plt
 from modelsUnetNoEdges import uNet5Stackb
 
 
+# Enetr dataset file location
 with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
@@ -103,7 +103,7 @@ interpolated_test_tf = interpolated_test_tens.eval()
 
 
 # Test MaxReNet
-# Load previously trained model
+# Load previously trained model: enter saved model location
 uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stack_noiseandphase_40vs30')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
