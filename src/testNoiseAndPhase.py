@@ -4,13 +4,11 @@ trained on dataset with varying phase and addition of noise
 (each image has a random phase and snr between 20 and 80 dB)
 The two tested architectures are:
 
-uNet5f2 which is implemented in modelsUnetNoEdges
-and whose model is stored in './ModelCheckpoint/weights_best_uNet5f2_noiseandphase'
+simpler autoencoder which is implemented in modelsUnetNoEdges (uNet5f2)
 
-uNet5Stack which is implemented in modelsUnetNoEdges
-and whose model is stored in './ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase'
+MaxReNet which is implemented in modelsUnetNoEdges (uNet5Stackb)
 
-Remember that the input of uNet5f2 and uNet5Stack are the interpolated images
+Remember that the input of both networks are the interpolated images
 """
 
 import pickle
@@ -26,8 +24,8 @@ from matplotlib import pyplot as plt
 from modelsUnetNoEdges import uNet5Stackb, uNet5f2c
 
 
-# The starting dataset has no phase, it is randomly added to each image
 
+# Enter dataset file location
 with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
@@ -92,8 +90,9 @@ interpolated_tf = interpolated_tens.eval()
 
 
 
-# uNetStackb
+# MaxReNet
 
+# Enter location of trained model
 uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
@@ -139,6 +138,7 @@ print("uNetStackb - score: ", str(score[0]), "; modes with mse > -10 dB:", str(l
 
 # uNet classic
 
+# enter location of trained model
 uNet5f2c.load_weights('./ModelCheckpoint/weights_best_uNet5f2c_noiseandphase')
 uNet5f2c.compile(loss='mean_squared_error',
                  optimizer='adam',
