@@ -20,29 +20,8 @@ from matplotlib import pyplot as plt
 from datasetReshapingUtils import cut_edges_output
 from modelsUnetNoEdges import uNet5Stackb
 
-# Instructions for using servers
-'''
-import os
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-# usa gpu con più memoria libera
-import GPUtil
-
-# GPU = str(GPUtil.getFirstAvailable(order='memory')[0])
-GPU = '0'
-os.environ["CUDA_VISIBLE_DEVICES"] = GPU
-print('GPU selected:', GPU)
-
-# crea sessione tensorflow
-import tensorflow as tf
-
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
-'''
-
-
+# Enter dataset file location
 with open("./DatasetFiles/dataset_small_images_phase84", 'rb') as data:
     dataset_base = pickle.load(data)
 
@@ -126,6 +105,7 @@ uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
                     metrics=['mean_squared_error'])
 
+# Enter in filepath desired location to save the trained model
 callback = [EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, verbose=1),
             ReduceLROnPlateau(monitor='val_loss', patience=5, verbose=1, factor=0.2),
             ModelCheckpoint(filepath='./ModelCheckpoint/weights_best_uNet5Stack_noiseandphase_40vs30',
