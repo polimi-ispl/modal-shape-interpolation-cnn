@@ -23,3 +23,35 @@ Each yellow block represents a layer made by two-dimensional convolution, ReLU a
 The output of Max Pooling and Upsampling layers are depicted in red and blue, respectively, while the purple blocks represent MaxRe layers.
 
 ![alt text](https://github.com/polimi-ispl/modal-shape-interpolation-cnn/blob/master/images/2020-05-05_220557.png)
+
+# About the code
+The code can be found in the src folder, which contains the following scripts:
+* modelsUnetNoEdges.py: MaxReNet implementation, together with the simpler network used as baseline
+* modeshapesPlate.py: contains the functions for the analytic expressions of rectangular plates
+* dataset84.py: creates a dataset of mode shape images in balanced number (84 occurences of each mode)
+* datasetGenerator.py: contains functions to generate a dataset of mode shape images
+* datasetPreparation.py: contains further functions for the preparation of the dataset
+* modeshapesPhase.py: addition of phase to the dataset images
+* datasetReshapingUtils.py: contains some utility functions for the mode shape images preparation, such as removal of zero edges
+* plotRes.py: functions to plot the results of mode shape images super-resolution
+* superResNoiseAndPhase.py: training of super-resultion architecture (MaxReNet Analysis)
+* testNoiseAndPhase.py: testing of super-resolution architecture (MaxReNet Analysis)
+* noisySuperResolution.py: training of super-resolution architecture with noisy dataset (Noisy Input Analysis)
+* noisySuperResTest.py: testing of super-resolution architecture with noisy dataset (Noisy Input Analysis)
+* uNetsOnDifferentModes.py: training of super-resolution architecture on subset of missing modes dataset (Missing Data Analysis)
+* testUNetsOnDiffModes.py: testing of super-resolution architecture on missing modes dataset (Missing Data Analysis)
+
+To execute the code, the installation of the following modules is required:
+* numpy
+* keras
+* sklearn
+* tensorflow
+* pickle (for reading and writing files such as datasets and saved models)
+* matplotlib.pyplot(for visualization and plots)
+* scipy.signal
+
+To replicate the experiments, a dataset of mode shape images can be created with script datasetgenerator.py.
+The script dataset84.py can be run substituting the location of the created dataset to balance it with same number of occurrences for the mode shape image of each mode.
+The created dataset can be used in modeshapesPhase.py for the addition of varying phase (as done, for example, in the section MaxReNet Analysis).  
+The dataset can be used to train the network, using for example the script superResNoiseAndPhase.py (other two analogous scripts can be found for Noisy Input Analysis and Missing Data Analysis), which saves model weights in a desired location.
+This can be used in test scripts (i.e. testNoiseAndPhase.py) to test the trained model.
