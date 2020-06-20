@@ -3,13 +3,11 @@ Training and testing of architectures for super-resolution with downsampling fac
 The dataset has varying phase and noise, SNR value is randomly chosen between 20 and 80 dB for each image
 Considered architectures:
 
-uNet5f2 which is implemented in modelsUnetNoEdges (simpler autoencoder)
-and whose model is stored in './ModelCheckpoint/weights_best_uNet5f2_noiseandphase'
+simpler autoencoder which is implemented in modelsUnetNoEdges (uNet5f2)
 
-uNet5Stackb which is implemented in modelsUnetNoEdges (MaxReNet)
-and whose model is stored in './ModelCheckpoint/weights_best_uNet5Stack_noiseandphase'
+MaxReNet which is implemented in modelsUnetNoEdges (uNet5Stackb)
 
-Remember that the input of uNet5f2 and uNet5Stack are the interpolated images
+Remember that the input of both networks are the interpolated images
 """
 
 import pickle
@@ -24,29 +22,9 @@ from datasetReshapingUtils import cut_edges_output
 from matplotlib import pyplot as plt
 from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
-# Instructions for using servers
-'''
-import os
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-# usa gpu con più memoria libera
-import GPUtil
-
-GPU = str(GPUtil.getFirstAvailable(order='memory')[0])
-# GPU = '0'
-os.environ["CUDA_VISIBLE_DEVICES"] = GPU
-print('GPU selected:', GPU)
-
-# crea sessione tensorflow
-import tensorflow as tf
-
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
-'''
-
-# Prima prova: dataset con fase varia
+# Enter dataset file location
 with open("./DatasetFiles/dataset_small_images_phase84", 'rb') as data:
     dataset_base = pickle.load(data)
 
@@ -128,6 +106,7 @@ uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
                     metrics=['mean_squared_error'])
 
+# Enter in filepath desired location for saving trained model
 callback = [EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, verbose=1),
             ReduceLROnPlateau(monitor='val_loss', patience=5, verbose=1, factor=0.2),
             ModelCheckpoint(filepath='./ModelCheckpoint/weights_best_uNet5Stack_noiseandphase',
