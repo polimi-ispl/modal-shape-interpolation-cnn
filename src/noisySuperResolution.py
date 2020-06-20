@@ -4,8 +4,6 @@ with noisy dataset
 Architectures that have been tested:
 MaxReNet (uNet5Stackb) implemented in modelsUnetNoEdges
 on different SNR = {40, 30} dB
-Models are stored in './ModelCheckpoint/weights_best_uNetStack_noiseandphase_30vs40'ù
-and './ModelCheckpoint/weights_best_uNetStack_noiseandphase_30vs40'
 """
 
 import pickle
