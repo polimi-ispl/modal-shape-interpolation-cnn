@@ -9,7 +9,7 @@ from datasetReshapingUtils import cut_edges_output
 from matplotlib import pyplot as plt
 from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
-# Prima prova: dataset con fase varia
+# Enter dataset location
 with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
@@ -20,10 +20,6 @@ print("Length of initial dataset:", str(len(dataset_base)))
 
 # Each row in the dataset is a tuple containing:
 # (mode order (m,n), modal frequency, modeshape of dimension (8, 12), Lx, Ly))
-
-# Addition of noise
-# To each image, we add noise randomly choosing a value of SNR between 80 and 20 dB
-# Clean image is also added to the dataset (as last element in each tuple)
 
 dataset_train = []
 dataset_test = []
@@ -75,6 +71,7 @@ interpolated_test_tens = tf.image.resize_images(downsampled_test_img, size=[6, 1
 tf.InteractiveSession()
 interpolated_test_tf = interpolated_test_tens.eval()
 
+# Enter location of saved trained model
 uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase_modes2')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
