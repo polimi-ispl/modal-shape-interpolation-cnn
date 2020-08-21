@@ -104,3 +104,6 @@ h = 0.002
 delta = 0.02
 dataset = plates_generator(3500, 0.23, 0.36, 0.15, 0.20, 0.01, h, delta, E, rho, nu)
 # 1927 rows
+
+with open("./dataset_small_images", 'wb') as output:
+    pickle.dump(dataset, output)
