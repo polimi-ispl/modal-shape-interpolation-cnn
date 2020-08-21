@@ -7,7 +7,7 @@ import collections
 import random
 
 
-with open("./DatasetFiles/dataset_small_images", 'rb') as data:
+with open("./dataset_small_images", 'rb') as data:
     dataset = pickle.load(data)
 
 modes = [mode[0] for mode in dataset]
@@ -24,5 +24,5 @@ for key in mode_occurences:
             replica = dataset[random.choice(idx_replica)]
             dataset.append(replica)
 
-with open("./DatasetFiles/dataset_small_images84", 'wb') as output:
+with open("./dataset_small_images84", 'wb') as output:
     pickle.dump(dataset, output)
