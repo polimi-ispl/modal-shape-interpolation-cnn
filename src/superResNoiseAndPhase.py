@@ -24,7 +24,6 @@ from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
 
 
-print("Inizio")
 # Enter dataset file location
 with open("./dataset_small_images_phase84", 'rb') as data:
     dataset_base = pickle.load(data)
