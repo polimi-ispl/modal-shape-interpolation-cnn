@@ -99,20 +99,3 @@ def dataset_creation(ds):
     #y2_mat = np_utils.to_categorical(y2, num_classes)
 
     return X_train, X_test, y2_train, y2_test, y2_train_mat, y2_test_mat, num_classes, dic
-
-
-dataset_whole_plate = dsGen.dataset_whole_plate(dsGen.dataset)
-ds = load_dataset("./DatasetFiles/dataset_small_images")
-X_train, X_test, y2_train, y2_test, y2_train_mat, y2_test_mat, num_classes, dic =\
-    dataset_creation(ds)
-ds_60 = noisy_dataset(ds, -60)
-X_train60, X_test60, y2_train60, y2_test60, y2_train_mat60, y2_test_mat60, num_classes60, dic = dataset_creation(ds_60)
-
-ds_30 = noisy_dataset(ds, -30)
-X_train30, X_test30, y2_train30, y2_test30, y2_train_mat30, y2_test_mat30, num_classes30, dic = dataset_creation(ds_30)
-
-ds_10 = noisy_dataset(ds, -10)
-X_train10, X_test10, y2_train10, y2_test10, y2_train_mat10, y2_test_mat10, num_classes10, dic = dataset_creation(ds_10)
-
-ds_5 = noisy_dataset(ds, -5)
-X_train5, X_test5, y2_train5, y2_test5, y2_train_mat5, y2_test_mat5, num_classes5, dic = dataset_creation(ds_5)
