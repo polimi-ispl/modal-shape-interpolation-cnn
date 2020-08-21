@@ -24,8 +24,9 @@ from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
 
 
+print("Inizio")
 # Enter dataset file location
-with open("./DatasetFiles/dataset_small_images_phase84", 'rb') as data:
+with open("./dataset_small_images_phase84", 'rb') as data:
     dataset_base = pickle.load(data)
 
 print("Length of initial dataset:", str(len(dataset_base)))
@@ -49,7 +50,7 @@ for i in range(len(dataset_base)):
     dataset.append((dataset_base[i][0], dataset_base[i][1], im, dataset_base[i][3], dataset_base[i][4],
                     dataset_base[i][2]))
 
-print("Length noisy dataset with modes removed: ", str(len(dataset)))
+
 
 print(len(dataset), "images in dataset")
 
@@ -109,7 +110,7 @@ uNet5Stackb.compile(loss='mean_squared_error',
 # Enter in filepath desired location for saving trained model
 callback = [EarlyStopping(monitor='val_loss', min_delta=0.001, patience=10, verbose=1),
             ReduceLROnPlateau(monitor='val_loss', patience=5, verbose=1, factor=0.2),
-            ModelCheckpoint(filepath='./ModelCheckpoint/weights_best_uNet5Stack_noiseandphase',
+            ModelCheckpoint(filepath='./weights_best_uNet5Stack_noiseandphase',
                             monitor='val_loss', verbose=1, save_best_only=True)
             ]
 
@@ -155,7 +156,7 @@ plt.plot(loss)
 plt.title("Training loss")
 
 # Saving history
-with open('./ModelCheckpoint/trainhistory_uNet5Stack_noiseandphase', 'wb') as file_pi:
+with open('./trainhistory_uNet5Stack_noiseandphase', 'wb') as file_pi:
     pickle.dump(history.history, file_pi)
 
 idx_hmsebis = [index for index, value in enumerate(mse) if value > 10 ** (-10 / 10)]
