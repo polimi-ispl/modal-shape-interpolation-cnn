@@ -16,7 +16,7 @@ from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
 
 # Enter dataset file location
-with open("./DatasetFiles/dataset_small_images_phase84", 'rb') as data:
+with open("./dataset_small_images_phase84", 'rb') as data:
     dataset_base = pickle.load(data)
 
 print("Length of initial dataset:", str(len(dataset_base)))
@@ -112,7 +112,7 @@ uNet5Stackb.compile(loss='mean_squared_error',
 # Enter in filepath desired location for saving the trained model
 callback = [EarlyStopping(monitor='val_loss', min_delta=0.001, patience=5, verbose=1),
             ReduceLROnPlateau(monitor='val_loss', patience=3, verbose=1, factor=0.2),
-            ModelCheckpoint(filepath='./ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase_modes2',
+            ModelCheckpoint(filepath='./weights_best_uNet5Stackb_noiseandphase_modes2',
                             monitor='val_loss', verbose=1, save_best_only=True)
             ]
 
@@ -157,7 +157,7 @@ plt.plot(loss)
 plt.title("Training loss")
 
 # Enter desired location to save training history
-with open('./ModelCheckpoint/trainhistory_uNet5Stackb_noiseandphase_modes2', 'wb') as file_pi:
+with open('./trainhistory_uNet5Stackb_noiseandphase_modes2', 'wb') as file_pi:
     pickle.dump(history.history, file_pi)
 
 idx_hmsebis = [index for index, value in enumerate(mse) if value > 10 ** (-10 / 10)]
