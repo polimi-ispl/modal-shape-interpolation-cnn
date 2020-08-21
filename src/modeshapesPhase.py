@@ -14,7 +14,7 @@ import pickle
 
 # Dataset with unbalanced mode shape images
 
-with open("./DatasetFiles/dataset_small_images", 'rb') as data:
+with open("./dataset_small_images", 'rb') as data:
     dataset_base = pickle.load(data)
 
 dataset = []
@@ -26,13 +26,13 @@ for i in range(len(dataset_base)):
             dataset.append((dataset_base[i][0], dataset_base[i][1], shape, dataset_base[i][3],
                             dataset_base[i][4]))
 
-with open("./DatasetFiles/dataset_small_images_phase", 'wb') as output:
+with open("./dataset_small_images_phase", 'wb') as output:
     pickle.dump(dataset, output)
 
 
 # Dataset with balanced mode shape images
 
-with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
+with open("./dataset_small_images84", 'rb') as data:
     dataset_base2 = pickle.load(data)
 
 dataset2 = []
@@ -41,5 +41,5 @@ for i in range(len(dataset_base2)):
         shape = dataset_base2[i][2]*math.sin(phi)
         dataset2.append((dataset_base2[i][0], dataset_base2[i][1], shape, dataset_base2[i][3], dataset_base2[i][4]))
 
-with open("./DatasetFiles/dataset_small_images_phase84", 'wb') as output:
+with open("./dataset_small_images_phase84", 'wb') as output:
     pickle.dump(dataset2, output)
