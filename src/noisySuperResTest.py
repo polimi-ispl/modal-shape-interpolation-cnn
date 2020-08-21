@@ -21,7 +21,7 @@ from modelsUnetNoEdges import uNet5Stackb
 
 
 # Enetr dataset file location
-with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
+with open("./dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
 print("Length of initial dataset:", str(len(dataset_base)))
@@ -104,7 +104,7 @@ interpolated_test_tf = interpolated_test_tens.eval()
 
 # Test MaxReNet
 # Load previously trained model: enter saved model location
-uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stack_noiseandphase_40vs30')
+uNet5Stackb.load_weights('./weights_best_uNet5Stack_noiseandphase_40vs30')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
                     metrics=['mean_squared_error'])
