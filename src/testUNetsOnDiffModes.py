@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 from modelsUnetNoEdges import uNet5f2c, uNet5Stackb
 
 # Enter dataset location
-with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
+with open("./dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
 print("Length of initial dataset:", str(len(dataset_base)))
@@ -72,7 +72,7 @@ tf.InteractiveSession()
 interpolated_test_tf = interpolated_test_tens.eval()
 
 # Enter location of saved trained model
-uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase_modes2')
+uNet5Stackb.load_weights('./weights_best_uNet5Stackb_noiseandphase_modes2')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
                     metrics=['mean_squared_error'])
