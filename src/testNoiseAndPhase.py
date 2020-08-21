@@ -26,7 +26,7 @@ from modelsUnetNoEdges import uNet5Stackb, uNet5f2c
 
 
 # Enter dataset file location
-with open("./DatasetFiles/dataset_small_images84", 'rb') as data:
+with open("./dataset_small_images84", 'rb') as data:
     dataset_base = pickle.load(data)
 
 print("Length of initial dataset:", str(len(dataset_base)))
@@ -93,7 +93,7 @@ interpolated_tf = interpolated_tens.eval()
 # MaxReNet
 
 # Enter location of trained model
-uNet5Stackb.load_weights('./ModelCheckpoint/weights_best_uNet5Stackb_noiseandphase')
+uNet5Stackb.load_weights('./weights_best_uNet5Stackb_noiseandphase')
 uNet5Stackb.compile(loss='mean_squared_error',
                     optimizer='adam',
                     metrics=['mean_squared_error'])
@@ -133,52 +133,3 @@ plt.title("Worst reconstruction by uNetStackb")
 idx_hmsebis = [index for index, value in enumerate(mse) if value > 10 ** (-10 / 10)]
 modes_bad = [downsampled[idx][0] for idx in idx_hmsebis]
 print("uNetStackb - score: ", str(score[0]), "; modes with mse > -10 dB:", str(len(modes_bad)))
-
-
-
-# uNet classic
-
-# enter location of trained model
-uNet5f2c.load_weights('./ModelCheckpoint/weights_best_uNet5f2c_noiseandphase')
-uNet5f2c.compile(loss='mean_squared_error',
-                 optimizer='adam',
-                 metrics=['mean_squared_error'])
-
-score3 = uNet5f2c.evaluate(interpolated_tf, groundtruth_img, verbose=0)
-probs3 = uNet5f2c.predict(interpolated_tf, verbose=0)
-
-# Computing and plotting mse and nmse
-mse3 = [mean_squared_error(groundtruth_img[idx][:, :, 0], probs3[idx][:, :, 0]) for idx in
-        range(len(groundtruth))]
-mse_den3 = [mean_squared_error(groundtruth_img[idx][:, :, 0], np.zeros(groundtruth_img[idx][:, :, 0].shape))
-            for idx in range(len(groundtruth))]
-nmse3 = [mse3[idx] / mse_den3[idx] for idx in range(len(groundtruth))]
-
-mse_int3 = [mean_squared_error(groundtruth_img[idx][:, :, 0], interpolated_tf[idx][:, :, 0]) for idx in
-            range(len(groundtruth))]
-nmse_int3 = [mse_int3[idx] / mse_den3[idx] for idx in range(len(groundtruth))]
-
-pR.plot_mse(mse3, mse_int3)
-plt.title("Mse of uNetStackf2")
-
-# Plot a random image
-pR.plot_hr(probs3[0][:, :, 0], groundtruth_img[0][:, :, 0], interpolated_tf[0][:, :, 0],
-           downsampled_img[0][:, :, 0])
-plt.title("Random reconstruction by uNetf2")
-
-pR.plot_mse(nmse3, nmse_int3)
-plt.title('Normalized mean squared error uNetf2')
-
-# Plotting worst reconstructed image
-max_mse3 = max(mse3)
-idx_bad3 = mse3.index(max_mse3)
-pR.plot_hr(probs3[idx_bad3][:, :, 0], groundtruth_img[idx_bad3][:, :, 0], interpolated_tf[idx_bad3][:, :, 0],
-           downsampled_img[idx_bad3][:, :, 0])
-plt.title("Worst reconstruction by uNetf2")
-
-idx_hmsebis3 = [index for index, value in enumerate(mse3) if value > 10 ** (-10 / 10)]
-modes_bad3 = [downsampled[idx][0] for idx in idx_hmsebis3]
-print("uNetf2 - score: ", str(score3[0]), "; modes with mse > -10 dB:", str(len(modes_bad3)))
-
-print("Worst mode by uNetStackb: ", str(idx_bad), "-", str(downsampled[idx_bad][0]))
-print("Worst mode by uNetf2: ", str(idx_bad3), "-", str(downsampled[idx_bad3][0]))
